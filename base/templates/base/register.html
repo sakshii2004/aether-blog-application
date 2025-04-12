@@ -1,0 +1,56 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="main-container">
+    <div class="register-container-1">
+        <div class="register-container">
+            <h1 class="login-text">REGISTER</h1>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="register-field">
+                    <label  for="id_username">Username</label>
+                    {{ form.username }}
+                    <p class="caption-text">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</p>
+                </div>
+
+                <div class="register-field">
+                    <label for="id_firstname">First Name</label>
+                    {{ form.first_name }}
+                </div>
+
+                <div class="register-field">
+                    <label for="id_lastname">Last Name</label>
+                    {{ form.last_name }}
+                </div>
+                
+                <div class="register-field">
+                    <label for="id_email">Email</label>
+                    {{ form.email }}
+                </div>
+                
+                <div class="register-field">
+                    <label for="id_password1">Password</label>
+                    {{ form.password1 }}
+                    <p class="caption-text">Your password can’t be too similar to your other personal information.</p>
+                    <p class="caption-text">Your password must contain at least 8 characters.</p>
+                    <p class="caption-text">Your password can’t be a commonly used password.</p>
+                    <p class="caption-text">Your password can’t be entirely numeric.</p>
+                </div>
+                
+                <div class="register-field">
+                    <label for="id_password2">Confirm Password</label>
+                    {{ form.password2 }}
+                    <p class="caption-text">Enter the same password as before, for verification.</p>
+                </div>
+
+                <input type="submit" value="Register"/>
+            </form>
+            <p class="author-name">Already signed up?</p>
+            <a class ="comment-time" href="{% url 'login' %}">Login</a>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
