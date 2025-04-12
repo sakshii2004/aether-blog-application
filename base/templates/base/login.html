@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div class="main-container">
+    <div class="login-container-1">
+        <div class="login-container">
+            <h1 class="login-text">LOGIN</h1>
+            <form method = "POST" id="login-form">
+                {% csrf_token %}
+                <input type="text" id="username" name="username" placeholder="Username" >
+                <input type="password" id="password" name="password" placeholder="Password" >
+                <input type="submit" value = "Login"/>
+            </form>
+            <p id="error-message" style="color: red;"></p>
+            <p class="author-name">Haven't signed up yet?</p>
+            <a class ="comment-time" href = "{% url 'register' %}">Sign up</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

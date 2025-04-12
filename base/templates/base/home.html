@@ -1,0 +1,16 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    <div class="main-container">
+        {% if user.is_authenticated %}
+            <h1 class="hello-user-text">
+                PICKS FOR {{ user.first_name|upper }} {{user.last_name|upper }}
+            </h1>
+            {% else %}
+            <h1>
+                Welcome, Guest!
+            </h1>
+        {% endif %}
+    </div>
+
+{% endblock %}

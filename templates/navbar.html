@@ -1,0 +1,21 @@
+{% load static %}
+<header>
+    <nav>
+        <ul class="nav-left">
+            <li><a href=""><img class="logo-image" src="{% static 'aether.png' %}" alt="Logo"></a></li>
+            <li><a href="{% url 'home' %}">EXPLORE</a></li>
+            <li><a href="">WRITE</a></li>
+            <li><a href="">ABOUT US</a></li>
+        </ul>
+        <ul class="nav-right">
+            {% if request.user.is_authenticated %}
+                <li><a href="" class="hello-text">Hello, {{user.first_name | title}}</li>
+                <li><a href="{% url 'logout' %}"><button>LOGOUT</button></a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}"><button>LOGIN</button></a></li>
+                <li><a href="{% url 'register' %}"><button>REGISTER</button></a></li>
+            {% endif %}
+            
+        </ul>
+    </nav>
+</header>
