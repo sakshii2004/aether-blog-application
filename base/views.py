@@ -76,5 +76,53 @@ def createBlog(request):
 @login_required(login_url='/login')
 def readBlog(request, blogID):
     blog = get_object_or_404(Blog, id=blogID)
-    context = {'blog': blog}
+    comments = Comment.objects.filter(blog = blogID)
+    comment_form = CommentForm()
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.blog = blog
+            comment.save()
+            return redirect('read-blog', blog.id)
+    context = {'blog': blog, 'comments':comments, 'commentform': comment_form}
     return render(request, 'base/read_blog.html', context)
+
+@login_required(login_url='/login')
+def likeBlog(request, blogID):
+    if request.method == 'POST':
+        blog = get_object_or_404(Blog, id=blogID)
+
+        if request.user in blog.liked_by.all():
+            blog.liked_by.remove(request.user)
+            blog.number_of_likes -= 1
+        else:
+            blog.liked_by.add(request.user)
+            blog.number_of_likes += 1
+
+        blog.save()
+        return JsonResponse({'likes': blog.number_of_likes})
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+@login_required
+def viewProfile(request, userID):
+    user = get_object_or_404(User, pk=userID)
+    is_owner = user == request.user
+    blogs = Blog.objects.filter(author = userID).order_by('-created_on')
+    context = {'user_profile': user, 'is_owner': is_owner, 'blogs':blogs}
+    return render(request, 'base/view_profile.html', context)
+
+@login_required
+def editProfile(request):
+    if request.method == 'POST':
+        form = ProfileEditForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('view-profile', userID=request.user.id)
+    else:
+        form = ProfileEditForm(instance=request.user)
+    context = {'form': form}
+    return render(request, 'base/edit_profile.html', context)
+

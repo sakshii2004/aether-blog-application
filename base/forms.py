@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Blog
+from .models import Blog,Comment
 
 class CustomUserCreationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=True)
@@ -24,3 +24,15 @@ class BlogForm(ModelForm):
         model = Blog
         fields = ['title', 'content', 'image']
 
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['body']
+        labels = {
+            'body': '',
+        }
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'first_name', 'last_name', 'email']
