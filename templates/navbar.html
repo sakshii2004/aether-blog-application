@@ -10,10 +10,10 @@
         <ul class="nav-right">
             {% if request.user.is_authenticated %}
                 <li><a href="" class="hello-text">Hello, {{user.first_name | title}}</li>
-                <li><a href="{% url 'logout' %}"><button>LOGOUT</button></a></li>
+                <li><a href="{% url 'logout' %}"><button class="button register">LOGOUT</button></a></li>
             {% else %}
-                <li><a href="{% url 'login' %}"><button>LOGIN</button></a></li>
-                <li><a href="{% url 'register' %}"><button>REGISTER</button></a></li>
+                <li><a href="{% url 'login' %}"><button class ="button login">LOGIN</button></a></li>
+                <li><a href="{% url 'register' %}"><button class ="button register">REGISTER</button></a></li>
             {% endif %}
             
         </ul>
