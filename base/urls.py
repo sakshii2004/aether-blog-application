@@ -15,7 +15,6 @@ urlpatterns = [
     path('like/<str:blogID>/', views.likeBlog, name='like-blog'),
     path('profile/<str:userID>/', views.viewProfile, name='view-profile'),
     path('edit-profile/', views.editProfile, name='edit-profile'),
-
-
+    path('about-us/', views.aboutUs, name='about-us'),
 ]
 

@@ -5,7 +5,7 @@
             <li><a href=""><img class="logo-image" src="{% static 'aether.png' %}" alt="Logo"></a></li>
             <li><a href="{% url 'home' %}">EXPLORE</a></li>
 	    <li><a href="{% url 'create-blog' %}">WRITE</a></li>
-            <li><a href="">ABOUT US</a></li>
+            <li><a href="{% url 'about-us' %}">ABOUT US</a></li>
         </ul>
         <ul class="nav-right">
             {% if request.user.is_authenticated %}
