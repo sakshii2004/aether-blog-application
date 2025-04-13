@@ -8,7 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import CustomUserCreationForm
 from .forms import CustomUserCreationForm, BlogForm, ProfileEditForm, CommentForm
-from .models import Blog
+from .models import Blog, Comment
 
 def landingPage(request):
     blogs = Blog.objects.order_by('-number_of_likes')
@@ -64,6 +64,7 @@ def logoutUser(request):
 
 @login_required(login_url='/login')
 def createBlog(request):
+    context = {}
     if request.method == 'POST':
         form = BlogForm(request.POST, request.FILES)
         if form.is_valid():
