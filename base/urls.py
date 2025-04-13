@@ -9,5 +9,8 @@ urlpatterns = [
     path('login/', views.loginUser, name = "login"),
     path('logout/', views.logoutUser, name = "logout"),
     path('register/', views.registerUser, name = "register"),
+    path('create/', views.createBlog, name='create-blog'),
+    path('read/<str:blogID>/', views.readBlog, name='read-blog'),
+
 ]
 

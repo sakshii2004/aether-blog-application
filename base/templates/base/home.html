@@ -11,6 +11,30 @@
                 Welcome, Guest!
             </h1>
         {% endif %}
+
+	{% for blog in blogs %}
+        <div class="blog-card-container">
+            <div class="blog-card-image">
+                {% if blog.image %}
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="blog-image" />
+                {% else %}
+                <img src="" alt="{{ blog.title }}" class="blog-image" />
+                {% endif %}
+            </div>
+
+            <div  class="blog-card-text">
+                <div style="display:flex; justify-content: space-between;">
+                    <h2 class="blog-title">{{blog.title}}</h2>
+                    <p class="blog-likes">❤ {{blog.number_of_likes}}</p>
+                </div>
+                <p class="author-name">By <a href="">{{blog.author.first_name}} {{blog.author.last_name}}</a></p>
+                <p class="content-preview">{{blog.content|truncatechars:350 }}</p>
+                <button class="button read"><a href="{% url 'read-blog' blog.id %}">READ MORE</a></button>
+
+            </div>
+        </div>
+        <hr style="opacity: 0.5;">
+        {% endfor %}
     </div>
 
 {% endblock %}

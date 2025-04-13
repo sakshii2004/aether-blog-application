@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, BlogForm
+from .models import Blog
 
 @login_required(login_url='/login')
 def home(request):
@@ -54,3 +56,25 @@ def loginUser(request):
 def logoutUser(request):
     logout(request)
     return redirect('home')
+
+@login_required(login_url='/login')
+def createBlog(request):
+    if request.method == 'POST':
+        form = BlogForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+            blog.process_image()
+            blog.save()
+            return redirect('home')
+    else:
+        form = BlogForm()
+        context = {'form': form}
+    return render(request, 'base/create_blog.html', context)
+
+@login_required(login_url='/login')
+def readBlog(request, blogID):
+    blog = get_object_or_404(Blog, id=blogID)
+    context = {'blog': blog}
+    return render(request, 'base/read_blog.html', context)
