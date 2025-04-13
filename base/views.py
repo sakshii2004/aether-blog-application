@@ -131,3 +131,6 @@ def editProfile(request):
     context = {'form': form}
     return render(request, 'base/edit_profile.html', context)
 
+def aboutUs(request):
+    return render(request, 'base/about_us.html')
+
