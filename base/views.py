@@ -7,8 +7,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import CustomUserCreationForm
-from .forms import CustomUserCreationForm, BlogForm
+from .forms import CustomUserCreationForm, BlogForm, ProfileEditForm, CommentForm
 from .models import Blog
+
+def landingPage(request):
+    blogs = Blog.objects.order_by('-number_of_likes')
+    context = {'blogs': blogs}
+    return render(request, 'base/landing_page.html', context) 
 
 @login_required(login_url='/login')
 def home(request):

@@ -1,0 +1,42 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <div class="main-container">
+        <div class="banner-img-container">
+            <img class="banner-image" src="{% static 'banner.png' %}">
+        </div>
+
+        <div class="button-container">
+            <button class="button landing-button"><a href="{% url 'login' %}">START READING</a></button>
+            <button class="button landing-button"><a href="{% url 'login' %}">START CREATING</a></button>
+        </div>
+
+        <div class="button-container">
+            <div class="line"></div>
+            <h1 class="our-readers-loved-text">OUR READERS LOVED</h1>
+            <div class="line"></div>
+        </div>
+
+        {% for blog in blogs %} 
+        <div class="blog-card-container">
+            <div class="blog-card-image">
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="blog-image" />
+            </div>
+
+            <div  class="blog-card-text">
+                <div style="display:flex; justify-content: space-between;">
+                    <h2 class="blog-title">{{blog.title}}</h2>
+                    <p class="blog-likes">❤ {{blog.number_of_likes}}</p>
+                </div>                
+                <p class="author-name">By <a href="{% url 'view-profile' blog.author.id %}">{{blog.author.first_name}} {{blog.author.last_name}}</a></p>
+                <p class="content-preview">{{blog.content|truncatechars:350 }}</p>
+                <button class="button read"><a href="{% url 'read-blog' blog.id %}">READ MORE</a></button>
+                
+            </div>
+        </div>
+        <hr style="opacity: 0.5;">
+        {% endfor %}
+
+    </div>
+
+{% endblock %}
