@@ -1,0 +1,47 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+    <div class="main-container">
+        <h1 class="hello-user-text">{{ user_profile.first_name|upper}} {{user_profile.last_name|upper}}'S PROFILE</h1>
+        <div class="profile-box">
+            <div class="profile-image-container">
+                <img class="default-profile-pic" src="{% static 'logo.png' %}">
+            </div>
+            <div class="profile-details">
+                <p class="profile-name">{{ user_profile.first_name }} {{ user_profile.last_name }}</p>
+                <p class="profile-username"> @{{ user_profile.username }}</p>
+        
+                {% if is_owner %}
+                    <p class="profile-email">{{ user_profile.email }}</p>
+                    <a href="{% url 'edit-profile' %}" class="edit-profile-link">EDIT PROFILE</a>
+
+                {% else %}
+                    <p class="profile-email">Joined {{ user_profile.date_joined|timesince }} ago</p>
+                    <a href="" class="edit-profile-link">FOLLOW</a>
+                    
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <h1 class="hello-user-text">BLOGS BY {{ user_profile.first_name|upper}} {{user_profile.last_name|upper}}</h1>
+        {% for blog in blogs %}
+        <div class="blog-card-container">
+            <div class="blog-card-image">
+                <img src="{{ blog.image.url }}" alt="{{ blog.title }}" class="blog-image" />
+            </div>
+
+            <div  class="blog-card-text">
+                <h2 class="blog-title">{{blog.title}}</h2>
+                <p class="author-name">By <a href="{% url 'view-profile' blog.author.id %}">{{blog.author.first_name}} {{blog.author.last_name}}</a></p>
+                <p class="content-preview">{{blog.content|truncatechars:350 }}</p>
+                <button class="button read"><a href="{% url 'read-blog' blog.id %}">READ MORE</a></button>
+            </div>
+        </div>
+        <hr style="opacity: 0.5;">
+        {% empty %}
+        <p class="no-comments">{{ user_profile.first_name|title}} {{user_profile.last_name|title}} has not written any blogs yet. </p>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
